@@ -33,7 +33,7 @@ function initMap() {
 
         google.maps.event.addListener(marker, 'click', (function(marker, i) {
             var content_bar = '<h1>'+data[i].bar_name+'</h1><p>'+data[i].address+'</p>';
-            console.log(content_bar);
+
 
             return function() {
                 infowindow.setContent(content_bar);
