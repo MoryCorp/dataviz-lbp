@@ -45,6 +45,7 @@ function initMap() {
 }
 
 $(function () {
+
    // console.log("READY");
 
     var URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ2gr_tgGs7ziW83sgOauf6WZw7sMfE4ToemXeffMue1JMdmjSaDcu5flbKga-h9DtU0YkCS_lrPQTf/pub?gid=1788698224&single=true&output=csv";
@@ -63,5 +64,7 @@ $(function () {
         initMap()
 
     });
+
+
 
 });
