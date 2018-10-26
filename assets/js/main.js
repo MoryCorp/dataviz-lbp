@@ -1,8 +1,57 @@
 var data;
 var map_style;
 var average_price = 0;
+var markers = [];
 
 function initMap() {
+
+    function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+        }
+    }
+    function clearMarkers() {
+        setMapOnAll(null);
+    }
+    function deleteMarkers() {
+        clearMarkers();
+        markers = [];
+    }
+    function setMarkesHours(hour){
+        console.log(data);
+        for (i = 0; i < data.length; i++) { //TODO : Mettre la condition pour le range slider !! Il faut deja reformate le sheet
+            if (parseFloat(data[i].price_regular) >= average_expensive) {
+                beer_icon = "assets/img/beer-expensive.png";
+                // console.log(data[i].price_regular)
+            } else if (parseFloat(data[i].price_regular) <= average_cheap) {
+                beer_icon = "assets/img/beer-cheap.png";
+                // console.log(data[i].price_regular)
+            } else {
+                beer_icon = "assets/img/beer-regular.png";
+            }
+
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(data[i].lat, data[i].long),
+                map: map,
+                icon: new google.maps.MarkerImage(beer_icon)
+            });
+
+            markers.push(marker);
+
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '</p>';
+
+
+                return function() {
+                    infowindow.setContent(content_bar);
+
+                    infowindow.open(map, marker);
+                }
+            })
+            (marker, i));
+        }
+
+    }
 
   // console.log(data);
 
@@ -43,6 +92,8 @@ function initMap() {
       icon: new google.maps.MarkerImage(beer_icon)
     });
 
+    markers.push(marker);
+
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
         var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '</p>';
 
@@ -55,6 +106,12 @@ function initMap() {
       })
       (marker, i));
   }
+
+
+    $( "#target" ).click(function() {
+        //deleteMarkers()
+        //setMarkesHours()
+    });
 }
 
 $(function() {
