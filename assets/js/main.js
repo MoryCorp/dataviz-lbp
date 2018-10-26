@@ -8,7 +8,6 @@ $.ajax({url: "assets/js/gmap_style.json", success: function(result){
     map_style = result;
 
 
-    console.log(map_style);
 
     function initMap() {
 
@@ -54,14 +53,23 @@ $.ajax({url: "assets/js/gmap_style.json", success: function(result){
 
 
         d3.csv(URL, function (d) {
+            var cpt_nb_bar = 0;
+            var average_price = 0;
             data = d;
+
+            console.log(data);
             //   console.log(data);
             data.forEach(function (d) {
                 if (d.lat !=="#N/A"){
-                   // console.log(d.lat)
-
+                    if (d.price_regular.length >= 1){
+                        average_price += parseFloat(d.price_regular);
+                        cpt_nb_bar ++;
+                        //console.log(average_price)
+                    }
                 }
             });
+            average_price = average_price/cpt_nb_bar;
+            console.log(average_price);
             //TODO : Ici c'est trop bien
             initMap()
 
