@@ -1,7 +1,6 @@
 
 var data;
 var map_style;
-var average_price = 0;
 
 
 
@@ -17,29 +16,34 @@ $.ajax({url: "assets/js/gmap_style.json", success: function(result){
 
         var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 13,
-            center: new google.maps.LatLng(45.7623323, 4.8262804,15),
+            center: new google.maps.LatLng(45.7623323, 4.8262804),
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             styles : map_style
         });
+
+        var icons = {
+            cheap: {
+              icon: "assets/img/beer-cheap.png"
+            },
+            regular: {
+              icon: "assets/img/beer-regular.png"
+            },
+            expensive: {
+              icon: "assets/img/beer-expensive.png"
+            }
+          };
 
 
         var infowindow = new google.maps.InfoWindow();
 
         var marker, i;
-        console.log("AVERAGE : "+average_price);
-
-        average_s = average_price*0.90;
-        average_i = average_price*1.10;
-
 
         for (i = 0; i < data.length; i++) {
-            if (parseFloat(data[i].price_regular) >= average_s){
-                console.log(data[i].price_regular)
-            }
+
            marker = new google.maps.Marker({
                 position: new google.maps.LatLng(data[i].lat, data[i].long),
                 map: map,
-                icon: new google.maps.MarkerImage('assets/img/redbeer.png')
+                icon: new google.maps.MarkerImage('assets/img/beer-cheap.png')
             });
 
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -64,6 +68,7 @@ $.ajax({url: "assets/js/gmap_style.json", success: function(result){
 
         d3.csv(URL, function (d) {
             var cpt_nb_bar = 0;
+            var average_price = 0;
             data = d;
 
             console.log(data);
@@ -78,6 +83,7 @@ $.ajax({url: "assets/js/gmap_style.json", success: function(result){
                 }
             });
             average_price = average_price/cpt_nb_bar;
+            console.log(average_price);
             //TODO : Ici c'est trop bien
             initMap()
 
