@@ -20,6 +20,8 @@ function initMap() {
     average_cheap = average_price * 0.90;
     average_expensive = average_price * 1.10;
 
+    $("#PrixM").text('Prix Moyen : '+Math.round(average_price*100)/100+"€");
+
     // console.log("Prix moyenne basse " + average_cheap);
     // console.log("Prix Moyen : " + average_price);
     // console.log("Prix moyenne haute : " + average_expensive);
