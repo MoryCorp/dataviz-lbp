@@ -12,6 +12,7 @@ $.ajax({url: "assets/js/gmap_style.json", success: function(result){
 
     function initMap() {
 
+
        // console.log(data);
 
         var map = new google.maps.Map(document.getElementById('map'), {
@@ -20,6 +21,18 @@ $.ajax({url: "assets/js/gmap_style.json", success: function(result){
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             styles : map_style
         });
+
+        var icons = {
+            cheap: {
+              icon: "assets/img/location-pointer.svg"
+            },
+            regular: {
+              icon: ""
+            },
+            expensive: {
+              icon: ""
+            }
+          };
 
 
         var infowindow = new google.maps.InfoWindow();
@@ -30,7 +43,8 @@ $.ajax({url: "assets/js/gmap_style.json", success: function(result){
 
            marker = new google.maps.Marker({
                 position: new google.maps.LatLng(data[i].lat, data[i].long),
-                map: map
+                map: map,
+                icon: new google.maps.MarkerImage('assets/img/redbeer.png')
             });
 
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
