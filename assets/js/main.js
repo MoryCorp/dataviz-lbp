@@ -1,6 +1,7 @@
 var data;
 var map_style;
-var average_p = 0;
+var average_price = 0;
+
 function initMap() {
 
     // console.log(data);
@@ -14,23 +15,23 @@ function initMap() {
 
 
     var infowindow = new google.maps.InfoWindow();
-
     var marker, i;
 
-    average_i = average_p * 0.90;
-    average_s = average_p * 1.10;
+    average_cheap = average_price * 0.90;
+    average_expensive = average_price * 1.10;
 
-    console.log(average_p);
-    console.log(average_i);
+    console.log("Prix moyenne basse " + average_cheap);
+    console.log("Prix Moyen : " + average_price);
+    console.log("Prix moyenne haute : " + average_expensive);
 
     for (i = 0; i < data.length; i++) {
-        if (parseFloat(data[i].price_regular) >= average_s) {
+        if (parseFloat(data[i].price_regular) >= average_expensive) {
             beer_icon = "assets/img/beer-expensive.png";
          //   console.log(data[i].price_regular)
         }
-        else if (parseFloat(data[i].price_regular) <= average_i){
+        else if (parseFloat(data[i].price_regular) <= average_cheap){
             beer_icon = "assets/img/beer-cheap.png";
-            console.log(data[i].price_regular)
+            // console.log(data[i].price_regular)
         }
         else {
             beer_icon = "assets/img/beer-regular.png";
@@ -75,13 +76,13 @@ $(function () {
             data.forEach(function (d) {
                 if (d.lat !== "#N/A") {
                     if (d.price_regular.length >= 1) {
-                        average_p += parseFloat(d.price_regular);
+                        average_price += parseFloat(d.price_regular);
                         cpt_nb_bar++;
-                        //console.log(average_price)
+                        //console.log(average_pricerice)
                     }
                 }
             });
-            average_p = average_p / cpt_nb_bar;
+            average_price = average_price / cpt_nb_bar;
             //TODO : Ici c'est trop bien
             initMap()
 
