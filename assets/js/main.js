@@ -16,20 +16,20 @@ $.ajax({url: "assets/js/gmap_style.json", success: function(result){
 
         var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 13,
-            center: new google.maps.LatLng(45.7623323, 4.8262804,15),
+            center: new google.maps.LatLng(45.7623323, 4.8262804),
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             styles : map_style
         });
 
         var icons = {
             cheap: {
-              icon: "assets/img/location-pointer.svg"
+              icon: "assets/img/beer-cheap.png"
             },
             regular: {
-              icon: ""
+              icon: "assets/img/beer-regular.png"
             },
             expensive: {
-              icon: ""
+              icon: "assets/img/beer-expensive.png"
             }
           };
 
@@ -43,7 +43,7 @@ $.ajax({url: "assets/js/gmap_style.json", success: function(result){
            marker = new google.maps.Marker({
                 position: new google.maps.LatLng(data[i].lat, data[i].long),
                 map: map,
-                icon: new google.maps.MarkerImage('assets/img/redbeer.png')
+                icon: new google.maps.MarkerImage('assets/img/beer-cheap.png')
             });
 
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
