@@ -5,7 +5,7 @@ var map_style;
 
 
 $.ajax({url: "assets/js/gmap_style.json", success: function(result){
-    map_style = result
+    map_style = result;
 
 
     console.log(map_style);
@@ -18,7 +18,7 @@ $.ajax({url: "assets/js/gmap_style.json", success: function(result){
             zoom: 13,
             center: new google.maps.LatLng(45.7623323, 4.8262804,15),
             mapTypeId: google.maps.MapTypeId.ROADMAP,
-            style : map_style
+            styles : map_style
         });
 
 
