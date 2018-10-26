@@ -20,9 +20,9 @@ function initMap() {
     average_cheap = average_price * 0.90;
     average_expensive = average_price * 1.10;
 
-    console.log("Prix moyenne basse " + average_cheap);
-    console.log("Prix Moyen : " + average_price);
-    console.log("Prix moyenne haute : " + average_expensive);
+    // console.log("Prix moyenne basse " + average_cheap);
+    // console.log("Prix Moyen : " + average_price);
+    // console.log("Prix moyenne haute : " + average_expensive);
 
     for (i = 0; i < data.length; i++) {
         if (parseFloat(data[i].price_regular) >= average_expensive) {
@@ -71,7 +71,7 @@ $(function () {
             var cpt_nb_bar = 0;
             data = d;
 
-            console.log(data);
+       //     console.log(data);
             //   console.log(data);
             data.forEach(function (d) {
                 if (d.lat !== "#N/A") {
