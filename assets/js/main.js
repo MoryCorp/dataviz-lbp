@@ -25,6 +25,21 @@ function CleanHour(hourStr, type) {
     }
 }
 
+function dynamicSort(property) {
+    var sortOrder = 1;
+
+    if (property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+    return function (a, b) {
+        if (sortOrder == -1) {
+            return b[property].localeCompare(a[property]);
+        } else {
+            return a[property].localeCompare(b[property]);
+        }
+    }
+}
 
 function initMap() {
 
@@ -76,26 +91,36 @@ function initMap() {
 
     $("#PrixM").text('Prix Moyen : ' + Math.round(average_price * 100) / 100 + "€");
 
-//  console.log("Prix Moyen : " + average_price);
-//  console.log("Prix moyenne basse " + average_cheap);
-//  console.log("Prix moyenne haute : " + average_expensive);
+    // for cheap beer
+    var cheap_bar_index = -1;
+    for (i = 0; i < data.length; i++) {
+
+        if (parseFloat(data[i].price_happy_hour) < cheap_beer) {
+            cheap_beer = data[i].price_happy_hour;
+            cheap_bar_index = i;
+            console.log(cheap_beer);
+            console.log(cheap_bar_index)
+        }
+    }
 
     for (i = 0; i < data.length; i++) {
 
-        /*if (parseFloat(data[i].price_happy_hour) < cheap_beer) {
-            cheap_beer = data[i].price_happy_hour;
-            console.log(cheap_beer)
+        if (i === cheap_bar_index){
+            beer_icon = "assets/img/Rainbowbeer.png";
         }
-        */
-        if (parseFloat(data[i].price_happy_hour) >= average_expensive) {
-            beer_icon = "assets/img/beer-expensive.png";
-            // console.log(data[i].price_regular)
-        } else if (parseFloat(data[i].price_happy_hour) <= average_cheap) {
-            beer_icon = "assets/img/beer-cheap.png";
-            // console.log(data[i].price_regular)
-        } else {
-            beer_icon = "assets/img/beer-regular.png";
+        else {
+            if (parseFloat(data[i].price_happy_hour) >= average_expensive) {
+                beer_icon = "assets/img/beer-expensive.png";
+                // console.log(data[i].price_regular)
+            } else if (parseFloat(data[i].price_happy_hour) <= average_cheap) {
+                beer_icon = "assets/img/beer-cheap.png";
+                // console.log(data[i].price_regular)
+            } else {
+                beer_icon = "assets/img/beer-regular.png";
+            }
         }
+
+
 
         marker = new google.maps.Marker({
             position: new google.maps.LatLng(data[i].lat, data[i].long),
@@ -131,7 +156,7 @@ function initMap() {
                 var date = new Date(null);
                 date.setSeconds((happy_second - current_time_second)); // specify value for SECONDS here
                 var timer_happy = date.toISOString().substr(11, 8);
-                
+
                 var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].price_happy_hour + '<br>' + 'Happy hour : ' + timer_happy + ' restantes' + '</p>';
 
             }
@@ -154,10 +179,10 @@ function initMap() {
                     var timer_happy = date.toISOString().substr(11, 8);
                 }
 
-                if (typeof timer_happy === "undefined"){
+                if (typeof timer_happy === "undefined") {
                     var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].price_regular + '<br>' + '</p>';
                 }
-                else{
+                else {
                     var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].price_regular + '<br>' + 'Happy hour : ' + timer_happy + ' avant le début' + '</p>';
 
                 }
@@ -186,12 +211,10 @@ $(function () {
 
         var URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ2gr_tgGs7ziW83sgOauf6WZw7sMfE4ToemXeffMue1JMdmjSaDcu5flbKga-h9DtU0YkCS_lrPQTf/pub?gid=1788698224&single=true&output=csv";
 
-
         d3.csv(URL, function (d) {
             var cpt_nb_bar = 0;
             data = d;
-            console.log(data)
-            //   console.log(data);
+           // console.log(d);
             data.forEach(function (d) {
 
                 if (d.price_happy_hour.length >= 1) {
