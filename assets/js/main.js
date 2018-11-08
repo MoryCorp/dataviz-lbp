@@ -100,6 +100,20 @@ function initMap() {
     styles: map_style
   });
 
+  if (navigator.geolocation)
+  var watchId = navigator.geolocation.watchPosition(successCallback,
+                            null,
+                            {enableHighAccuracy:true});
+else
+  alert("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
+
+function successCallback(position){
+  map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+  var marker = new google.maps.Marker({
+    position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+    map: map
+  });
+}
 
   var infowindow = new google.maps.InfoWindow();
   var marker, i;
