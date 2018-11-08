@@ -69,7 +69,7 @@ function initMap() {
                 console.log(data[i])
             }
         }
-        
+
     }
 
   // console.log(data);
@@ -136,7 +136,28 @@ function successCallback(position){
       //  console.log(data[i].bar_name,hour_happy_start,hour_happy_end);
       //  console.log(current_time)
         if (current_time >= hour_happy_start && current_time <= hour_happy_end ){
-            var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].price_happy_hour +  '</p>';
+
+            hour_happy = "" +hour_happy_end;
+            hour_happy = hour_happy[0]+hour_happy[1];
+            hour_happy = parseInt(hour_happy);
+            minute_happy = "" +hour_happy_end;
+            minute_happy = minute_happy[2]+minute_happy[3];
+            minute_happy = parseInt(minute_happy);
+            timerH_happy  = Math.abs(hour_happy - current_hour);
+            timerM_happy  = minute_happy - current_minute;
+
+            happy_second =  hour_happy * 3600 + minute_happy * 60;
+
+            current_time_second = current_hour * 3600 + current_minute * 60;
+
+            var date = new Date(null);
+            date.setSeconds((happy_second - current_time_second)); // specify value for SECONDS here
+            var timer_happy = date.toISOString().substr(11, 8);
+            console.log(timer_happy);
+
+            console.log(data[i].bar_name,timer_happy);
+
+            var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].price_happy_hour +  '<br>' + 'Happy hour : ' + timer_happy +' restantes'+ '</p>';
 
         }
         else {
