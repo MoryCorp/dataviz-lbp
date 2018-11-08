@@ -129,10 +129,11 @@ function initMap() {
                 var timerM_happy = minute_happy - current_minute;
                 var happy_minute = hour_happy * 60 + minute_happy;
 
-                var date = new Date(null);
-                date.setSeconds((happy_minute - current_time_minute)); // specify value for SECONDS here
-                var timer_happy = date.toISOString().substr(11, 8);
-
+                if (!isNaN(happy_minute)) {
+                    var date = new Date(null);
+                    date.setSeconds((happy_minute - current_time_minute)); // specify value for SECONDS here
+                    var timer_happy = date.toISOString().substr(11, 8);
+                }
                 var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].current_price + '<br>' + 'Happy hour : ' + timer_happy + ' restantes' + '</p>';
 
             }
