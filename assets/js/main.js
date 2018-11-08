@@ -235,6 +235,7 @@ $(function () {
                 }
             });
 
+            // Filter only open bars
             data = data.filter(function (d) {
                 return d.is_open;
             });
