@@ -8,12 +8,9 @@ var now = new Date();
 current_hour = now.getHours();
 current_minute = now.getMinutes();
 current_day = now.getDay();
-if (current_minute < 10) {
-    current_minute = ('0' + current_minute).slice(-2)
-}
-var current_time = parseInt("" + current_hour + current_minute);
-
-//console.log(parseInt(current_time));
+var current_time_minute = current_hour * 60 + current_minute;
+console.log(current_hour, current_minute, current_time_minute);
+var days2label = ['', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi'];
 
 function CleanHour(hourStr, type) {
     if (type === 'happy') {
@@ -25,21 +22,6 @@ function CleanHour(hourStr, type) {
     }
 }
 
-function dynamicSort(property) {
-    var sortOrder = 1;
-
-    if (property[0] === "-") {
-        sortOrder = -1;
-        property = property.substr(1);
-    }
-    return function (a, b) {
-        if (sortOrder == -1) {
-            return b[property].localeCompare(a[property]);
-        } else {
-            return a[property].localeCompare(b[property]);
-        }
-    }
-}
 
 function initMap() {
 
@@ -97,31 +79,25 @@ function initMap() {
     var cheap_bar_index = -1;
     for (i = 0; i < data.length; i++) {
 
-        if (parseFloat(data[i].price_happy_hour) < cheap_beer) {
-            cheap_beer = data[i].price_happy_hour;
+        if (parseFloat(data[i].current_price) < cheap_beer) {
+            cheap_beer = data[i].current_price;
             cheap_bar_index = i;
-            console.log(cheap_beer);
-            console.log(cheap_bar_index)
         }
     }
 
     for (i = 0; i < data.length; i++) {
-
-        if (i === cheap_bar_index){
+        if (i === cheap_bar_index || data[i].current_price === cheap_beer) {
             beer_icon = "assets/img/Rainbowbeer.png";
         }
         else {
-            if (parseFloat(data[i].price_happy_hour) >= average_expensive) {
+            if (parseFloat(data[i].current_price) >= average_expensive) {
                 beer_icon = "assets/img/beer-expensive.png";
-                // console.log(data[i].price_regular)
-            } else if (parseFloat(data[i].price_happy_hour) <= average_cheap) {
+            } else if (parseFloat(data[i].current_price) <= average_cheap) {
                 beer_icon = "assets/img/beer-cheap.png";
-                // console.log(data[i].price_regular)
             } else {
                 beer_icon = "assets/img/beer-regular.png";
             }
         }
-
 
 
         marker = new google.maps.Marker({
@@ -142,46 +118,43 @@ function initMap() {
             //  console.log(current_time)
 
 
-            if (current_time >= hour_happy_start && current_time <= hour_happy_end) {
+            if (data[i].is_happy) {
 
-                hour_happy = "" + hour_happy_end;
+                var hour_happy = "" + hour_happy_end;
                 hour_happy = hour_happy[0] + hour_happy[1];
                 hour_happy = parseInt(hour_happy);
-                minute_happy = "" + hour_happy_end;
+                var minute_happy = "" + hour_happy_end;
                 minute_happy = minute_happy[2] + minute_happy[3];
                 minute_happy = parseInt(minute_happy);
-                timerH_happy = Math.abs(hour_happy - current_hour);
-                timerM_happy = minute_happy - current_minute;
-                happy_second = hour_happy * 3600 + minute_happy * 60;
-                current_time_second = current_hour * 3600 + current_minute * 60;
+                var timerH_happy = Math.abs(hour_happy - current_hour);
+                var timerM_happy = minute_happy - current_minute;
+                var happy_minute = hour_happy * 60 + minute_happy;
 
                 var date = new Date(null);
-                date.setSeconds((happy_second - current_time_second)); // specify value for SECONDS here
+                date.setSeconds((happy_minute - current_time_minute)); // specify value for SECONDS here
                 var timer_happy = date.toISOString().substr(11, 8);
 
-                var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].price_happy_hour + '<br>' + 'Happy hour : ' + timer_happy + ' restantes' + '</p>';
+                var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].current_price + '<br>' + 'Happy hour : ' + timer_happy + ' restantes' + '</p>';
 
             }
             else {
 
-                hour_happy = "" + hour_happy_start;
+                var hour_happy = "" + hour_happy_start;
                 hour_happy = hour_happy[0] + hour_happy[1];
                 hour_happy = parseInt(hour_happy);
-                minute_happy = "" + hour_happy_end;
+                var minute_happy = "" + hour_happy_end;
                 minute_happy = minute_happy[2] + minute_happy[3];
                 minute_happy = parseInt(minute_happy);
-                timerH_happy = Math.abs(hour_happy - current_hour);
-                timerM_happy = minute_happy - current_minute;
-                happy_second = hour_happy * 3600 + minute_happy * 60;
-                current_time_second = current_hour * 3600 + current_minute * 60;
-
-                if (!isNaN(happy_second)) {
-                    var date = new Date(null);
-                    date.setSeconds((happy_second - current_time_second)); // specify value for SECONDS here
+                var timerH_happy = Math.abs(hour_happy - current_hour);
+                var timerM_happy = minute_happy - current_minute;
+                var happy_minute = hour_happy * 60 + minute_happy;
+                var date = new Date(null);
+                if (!isNaN(happy_minute)) {
+                    date.setSeconds((happy_minute - current_time_minute)); // specify value for SECONDS here
                     var timer_happy = date.toISOString().substr(11, 8);
                 }
 
-                if (typeof timer_happy === "undefined") {
+                if (timer_happy === undefined) {
                     var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].price_regular + '<br>' + '</p>';
                 }
                 else {
@@ -204,6 +177,29 @@ function initMap() {
 
 }
 
+function parse_timeinterval(s) {
+    if (s === "") {
+        return [0, 0];
+    }
+    var opening_hours = s;
+    var res = opening_hours.split("-");
+    var start_time = res[0];
+    var end_time = res[1];
+    var start_time_h = parseInt(start_time.split("h")[0]);
+    var start_time_m = parseInt(start_time.split("h")[1]);
+    var end_time_h = parseInt(end_time.split("h")[0]);
+    var end_time_m = parseInt(end_time.split("h")[1]);
+
+    if (end_time_h < start_time_h) {
+        end_time_h += 24;
+    }
+
+    var start_minute = start_time_h * 60 + start_time_m;
+    var end_minute = end_time_h * 60 + end_time_m;
+
+    return [start_minute, end_minute];
+}
+
 $(function () {
 
 
@@ -216,17 +212,33 @@ $(function () {
         d3.csv(URL, function (d) {
             var cpt_nb_bar = 0;
             data = d;
-           // console.log(d);
             data.forEach(function (d) {
 
-                if (d.price_happy_hour.length >= 1) {
-//
-                    average_price += parseFloat(d.price_happy_hour);
-                    cpt_nb_bar++;
-                    // console.log(cpt_nb_bar)
-                }
+                ti = parse_timeinterval(d[days2label[current_day]]);
+                ti_hh = parse_timeinterval(d[days2label[current_day] + "_happy"]);
 
+                if (current_time_minute >= ti[0] && current_time_minute <= ti[1]) {
+                    d.is_open = true;
+                } else {
+                    d.is_open = false;
+                }
+                if (current_time_minute >= ti_hh[0] && current_time_minute <= ti_hh[1]) {
+                    d.is_happy = true;
+                    d.current_price = parseFloat(d.price_happy_hour);
+                } else {
+                    d.is_happy = false;
+                    d.current_price = parseFloat(d.price_regular);
+                }
+                if (!isNaN(d.current_price)) {
+                    average_price += d.current_price;
+                    cpt_nb_bar++;
+                }
             });
+
+            data = data.filter(function (d) {
+                return d.is_open;
+            });
+
             average_price = average_price / cpt_nb_bar;
             //TODO : Ici c'est trop bien
             initMap()
