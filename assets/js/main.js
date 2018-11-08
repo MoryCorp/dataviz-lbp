@@ -38,39 +38,7 @@ function initMap() {
         clearMarkers();
         markers = [];
     }
-    function setMarkesHours(jour,hour){
 
-        //console.log(data);
-        for (i = 0; i < data.length; i++) { //TODO : Mettre la condition pour le range slider !! Il faut deja reformate le sheet
-            if (jour === "Lundi"){
-                if (data[i].lundi.length > 0){
-                    console.log(data[i])
-                }
-            }
-            else if (jour === "Mardi"){
-                console.log(data[i])
-            }
-            else if (jour === "Mercredi"){
-                console.log(data[i])
-            }
-            else if (jour === "Jeudi"){
-                console.log(data[i])
-            }
-            else if (jour === "Vendredi"){
-                console.log(data[i])
-            }
-            else if (jour === "Samedi"){
-                console.log(data[i])
-            }
-            else if (jour === "Dimanche"){
-                console.log(data[i])
-            }
-            else if (jour === "Tous les jours"){
-                console.log(data[i])
-            }
-        }
-
-    }
 
   // console.log(data);
 
@@ -153,7 +121,6 @@ function successCallback(position){
             var date = new Date(null);
             date.setSeconds((happy_second - current_time_second)); // specify value for SECONDS here
             var timer_happy = date.toISOString().substr(11, 8);
-            console.log("end: " +timer_happy, data[i].bar_name);
             var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].price_happy_hour +  '<br>' + 'Happy hour : ' + timer_happy +' restantes'+ '</p>';
 
         }
@@ -174,7 +141,6 @@ function successCallback(position){
                 var date = new Date(null);
                 date.setSeconds((happy_second - current_time_second)); // specify value for SECONDS here
                 var timer_happy = date.toISOString().substr(11, 8);
-                console.log("Start: " +timer_happy, data[i].bar_name);
             }
 
 
@@ -193,11 +159,6 @@ function successCallback(position){
       (marker, i));
   }
 
-
-    $( "#target" ).click(function() {
-        //deleteMarkers()
-        setMarkesHours('lundi',17) //TODO Il faut que l'input du jours soit format comme ça => lundi_happy, mardi_hayppy...
-    });
 }
 
 $(function() {
