@@ -3,12 +3,15 @@ var map_style;
 var average_price = 0;
 var markers = [];
 
+
+
 function initMap() {
 
     $('#select-day').on('change', function(e){
         console.log(this.value);
         setMarkesHours(this.value,7)
     });
+
 
     function setMapOnAll(map) {
         for (var i = 0; i < markers.length; i++) {
@@ -153,8 +156,21 @@ function initMap() {
 }
 
 $(function() {
+    var now = new Date();
+    console.log(now.getHours());
 
-  $.get("assets/js/gmap_style.json", function(result) {
+    function CleanHour(hourStr,type) {
+        if (type === 'happy'){
+            hour_replace = hourStr.replace("-","");
+            hour_replace = hour_replace.replace("h","");
+            hour_replace = hour_replace.replace("h","");
+            hour_replace = hour_replace.replace("H","");
+            return hour_replace
+        }
+    }
+
+
+    $.get("assets/js/gmap_style.json", function(result) {
     map_style = result;
 
 
@@ -167,8 +183,10 @@ $(function() {
 
       //   console.log(data);
       data.forEach(function(d) {
+          CleanHour(d.lundi_happy,"happy");
+
           if (d.price_happy_hour.length >= 1) {
-//            console.log(d.price_happy_hour);
+//
             average_price += parseFloat(d.price_happy_hour);
             cpt_nb_bar++;
            // console.log(cpt_nb_bar)
