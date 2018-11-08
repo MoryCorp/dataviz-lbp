@@ -3,15 +3,28 @@ var map_style;
 var average_price = 0;
 var markers = [];
 
+var now = new Date();
+current_hour = now.getHours();
+current_minute = now.getMinutes();
+current_day  = now.getDay();
+if (current_minute < 10){
+    current_minute = ('0'+current_minute).slice(-2)
+}
+var current_time = parseInt("" + current_hour + current_minute);
+//console.log(parseInt(current_time));
+
+function CleanHour(hourStr,type) {
+    if (type === 'happy'){
+        hour_replace = hourStr.replace("-","");
+        hour_replace = hour_replace.replace("h","");
+        hour_replace = hour_replace.replace("h","");
+        hour_replace = hour_replace.replace("H","");
+        return hour_replace
+    }
+}
 
 
 function initMap() {
-
-    $('#select-day').on('change', function(e){
-        console.log(this.value);
-        setMarkesHours(this.value,7)
-    });
-
 
     function setMapOnAll(map) {
         for (var i = 0; i < markers.length; i++) {
@@ -56,42 +69,7 @@ function initMap() {
                 console.log(data[i])
             }
         }
-
-
-            /*
-                    for (i = 0; i < data.length; i++) { //TODO : Mettre la condition pour le range slider !! Il faut deja reformate le sheet
-                        if (parseFloat(data[i].price_regular) >= average_expensive) {
-                            beer_icon = "assets/img/beer-expensive.png";
-                            // console.log(data[i].price_regular)
-                        } else if (parseFloat(data[i].price_regular) <= average_cheap) {
-                            beer_icon = "assets/img/beer-cheap.png";
-                            // console.log(data[i].price_regular)
-                        } else {
-                            beer_icon = "assets/img/beer-regular.png";
-                        }
-
-                        marker = new google.maps.Marker({
-                            position: new google.maps.LatLng(data[i].lat, data[i].long),
-                            map: map,
-                            icon: new google.maps.MarkerImage(beer_icon)
-                        });
-
-                        markers.push(marker);
-
-                        google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                            var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '</p>';
-
-
-                            return function() {
-                                infowindow.setContent(content_bar);
-
-                                infowindow.open(map, marker);
-                            }
-                        })
-                        (marker, i));
-                    }
-            */
-
+        
     }
 
   // console.log(data);
@@ -150,7 +128,22 @@ function successCallback(position){
     markers.push(marker);
 
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
-        var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '</p>';
+
+        var happy_hour_clean = CleanHour(data[i].lundi_happy,"happy");
+        var hour_happy_start = parseInt(happy_hour_clean[0]+happy_hour_clean[1]+happy_hour_clean[2]+happy_hour_clean[3]);
+        var hour_happy_end = parseInt(happy_hour_clean[4]+happy_hour_clean[5]+happy_hour_clean[6]+happy_hour_clean[7]);
+
+      //  console.log(data[i].bar_name,hour_happy_start,hour_happy_end);
+      //  console.log(current_time)
+        if (current_time >= hour_happy_start && current_time <= hour_happy_end ){
+            var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].price_happy_hour +  '</p>';
+
+        }
+        else {
+            var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].price_regular +  '</p>';
+        }
+
+
 
 
         return function() {
@@ -170,18 +163,6 @@ function successCallback(position){
 }
 
 $(function() {
-    var now = new Date();
-    console.log(now.getHours());
-
-    function CleanHour(hourStr,type) {
-        if (type === 'happy'){
-            hour_replace = hourStr.replace("-","");
-            hour_replace = hour_replace.replace("h","");
-            hour_replace = hour_replace.replace("h","");
-            hour_replace = hour_replace.replace("H","");
-            return hour_replace
-        }
-    }
 
 
     $.get("assets/js/gmap_style.json", function(result) {
@@ -197,7 +178,6 @@ $(function() {
 
       //   console.log(data);
       data.forEach(function(d) {
-          CleanHour(d.lundi_happy,"happy");
 
           if (d.price_happy_hour.length >= 1) {
 //
