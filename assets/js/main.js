@@ -52,7 +52,7 @@ function initMap() {
     });
 
     if (navigator.geolocation)
-        var watchId = navigator.geolocation.watchPosition(successCallback,
+        var watchId = navigator.geolocation.getCurrentPosition(successCallback,
             null,
             {enableHighAccuracy: true});
     else
