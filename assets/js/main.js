@@ -9,7 +9,6 @@ current_hour = now.getHours();
 current_minute = now.getMinutes();
 current_day = now.getDay();
 var current_time_minute = current_hour * 60 + current_minute;
-console.log(current_hour, current_minute, current_time_minute);
 var days2label = ['', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi'];
 
 function CleanHour(hourStr, type) {
@@ -155,10 +154,10 @@ function initMap() {
                 }
 
                 if (timer_happy === undefined) {
-                    var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].price_regular + '<br>' + '</p>';
+                    var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].current_price + '<br>' + '</p>';
                 }
                 else {
-                    var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].price_regular + '<br>' + 'Happy hour : ' + timer_happy + ' avant le début' + '</p>';
+                    var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].current_price + '<br>' + 'Happy hour : ' + timer_happy + ' avant le début' + '</p>';
 
                 }
 
@@ -224,10 +223,12 @@ $(function () {
                 }
                 if (current_time_minute >= ti_hh[0] && current_time_minute <= ti_hh[1]) {
                     d.is_happy = true;
-                    d.current_price = parseFloat(d.price_happy_hour);
+                    d.current_price = parseFloat(d.price_happy_hour.replace(",","."));
+                    console.log(d.current_price);
+
                 } else {
                     d.is_happy = false;
-                    d.current_price = parseFloat(d.price_regular);
+                    d.current_price = parseFloat(d.price_regular.replace(",","."));
                 }
                 if (!isNaN(d.current_price)) {
                     average_price += d.current_price;
