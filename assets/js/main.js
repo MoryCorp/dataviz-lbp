@@ -65,7 +65,9 @@ function initMap() {
         zoom: 13,
         center: new google.maps.LatLng(45.7623323, 4.8262804),
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        styles: map_style
+        styles: map_style,
+        mapTypeControl: false,
+        streetViewControl: false
     });
 
     if (navigator.geolocation)
