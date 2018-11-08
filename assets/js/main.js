@@ -163,8 +163,7 @@ function initMap() {
 
 
             }
-
-
+            
             return function () {
                 infowindow.setContent(content_bar);
 
