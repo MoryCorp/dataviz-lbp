@@ -200,6 +200,8 @@ function parse_timeinterval(s) {
 
 $(function () {
 
+    $('[data-toggle="tooltip"]').tooltip();
+
 
     $.get("assets/js/gmap_style.json", function (result) {
         map_style = result;
@@ -223,7 +225,6 @@ $(function () {
                 if (current_time_minute >= ti_hh[0] && current_time_minute <= ti_hh[1]) {
                     d.is_happy = true;
                     d.current_price = parseFloat(d.price_happy_hour.replace(",","."));
-                    console.log(d.current_price);
 
                 } else {
                     d.is_happy = false;

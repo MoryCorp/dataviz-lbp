@@ -8,3 +8,21 @@ html, body {
     margin: 0;
     padding: 0;
 }
+.badge-red{
+    background-color: #E94C4D ;
+}
+.badge-yellow{
+    background-color: #F1D64D ;
+
+}
+.badge-orange{
+    background-color: #F08602 ;
+}
+.clock {
+    font-size: 2em;
+}
+.card-custom{
+    background-color: #e2f1e4;
+}
+.div-legend{
+}
