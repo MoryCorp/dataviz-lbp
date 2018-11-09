@@ -175,7 +175,13 @@ function initMap() {
                 $("#bar_name").html(data[i].bar_name);
                 $("#current_price").html("Le prix de la pinte de bière est actuellement de : " +  data[i].current_price + "€");
                 $("#happy_hour").html(content_bar);
-                $("#next_price").html("Le prochain prix sera de : " + next_price + "€");
+
+                if (data[i].is_happy){
+                    $("#next_price").html("Le prochain prix sera de : " + data[i].price_regular + "€");
+                }
+                else {
+                    $("#next_price").html("Le prochain prix sera de : " + data[i].price_happy_hour + "€");
+                }
             }
         })
         (marker, i));
