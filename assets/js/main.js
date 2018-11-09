@@ -164,11 +164,14 @@ function initMap() {
 
 
             }
-            
+
+
+
             return function () {
                 infowindow.setContent(content_bar);
 
-                infowindow.open(map, marker);
+                //infowindow.open(map, marker);
+                $("#bar_info").html(data[i].bar_name);
             }
         })
         (marker, i));
@@ -225,11 +228,11 @@ $(function () {
                 }
                 if (current_time_minute >= ti_hh[0] && current_time_minute <= ti_hh[1]) {
                     d.is_happy = true;
-                    d.current_price = parseFloat(d.price_happy_hour.replace(",","."));
+                    d.current_price = parseFloat(d.price_happy_hour.replace(",", "."));
 
                 } else {
                     d.is_happy = false;
-                    d.current_price = parseFloat(d.price_regular.replace(",","."));
+                    d.current_price = parseFloat(d.price_regular.replace(",", "."));
                 }
                 if (!isNaN(d.current_price)) {
                     average_price += d.current_price;
