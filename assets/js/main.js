@@ -263,16 +263,25 @@ $(function () {
 
             average_price = average_price / cpt_nb_bar;
             //TODO : Ici c'est trop bien
-            console.log(d);
             initMap();
-            console.log(markers)
 
 
+            var slider = document.getElementById("myRange");
+            var output = document.getElementById("demo");
+            var value_range_slider = 0;
+            output.innerHTML = slider.value;
 
-            $("#toto").click(function () {
-                 cheap_beer = 100;
+            slider.oninput = function() {
+                output.innerHTML = this.value+"h";
+                value_range_slider = this.value;
+            };
+
+            $( "#myRange" ).change(function() {
+
+                cheap_beer = 100;
                 markers = [];
-                current_hour = 17;
+                current_hour = value_range_slider;
+                console.log(current_hour)
                 current_minute = 30;
                 cpt_nb_bar = 0;
                 current_time_minute = current_hour * 60 + current_minute;
@@ -308,11 +317,9 @@ $(function () {
                 });
 
                 average_price = average_price / cpt_nb_bar;
-                console.log(d);
 
                 initMap();
-                console.log(markers);
-                console.log(data_nofilter);
+
             });
         });
 

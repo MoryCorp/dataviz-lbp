@@ -12,6 +12,7 @@
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
           crossorigin=""/>
     <link rel="stylesheet" href="assets/css/style.css">
+
 </head>
 
 <body>
@@ -27,7 +28,12 @@
                 data-toggle="tooltip" data-placement="top" title="Supérieur à la moyenne" class="badge badge-red">&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </h2>
     </div>
-    <div class=" offset-md-6 col-md-2 clock"></div>
+
+    <div  class="offset-md-2 col-md-2">
+        <input type="range" min="1" max="23" value="50" step="1" class="slider" id="myRange">
+        <p>Heure : <span id="demo"></span></p>
+    </div>
+    <div class="offset-md-1 col-md-3 clock"></div>
 
     <div class="col-md-12">
         <!-- <h2 id="nameBar">Information sur le bar : </h2> -->
@@ -40,7 +46,6 @@
               <h5 id="happy_hour"></h5>
               <h5 id="next_price"></h5>
               <a id="goto_maps" href="" target="_blank"></a>
-
             </div>
         </div>
     </div>
@@ -58,7 +63,6 @@
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAETAmIjibIuRIGX2bThxfd7Ht9etd6SOo"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
 <script src="assets/js/clock.js"></script>
-
 
 </body>
 
