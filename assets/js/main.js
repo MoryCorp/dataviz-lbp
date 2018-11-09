@@ -175,6 +175,8 @@ function initMap() {
                 $("#bar_name").html(data[i].bar_name);
                 $("#current_price").html("Le prix de la pinte de bière est actuellement de : " +  data[i].current_price + "€");
                 $("#happy_hour").html(content_bar);
+                $("#goto_maps").html("<i class='fas fa-arrow-circle-right fa-3x' aria-hidden='true'></i>");
+                $("#goto_maps").attr('href', 'https://maps.google.com/?q=' + data[i].bar_name);
 
 
                 if (data[i].is_happy){
