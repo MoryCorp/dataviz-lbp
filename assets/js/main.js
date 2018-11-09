@@ -5,7 +5,7 @@ var markers = [];
 var cheap_beer = 100;
 
 var now = new Date();
-current_hour = 11;
+current_hour = now.getHours();
 current_minute = now.getMinutes();
 current_day = now.getDay();
 var current_time_minute = current_hour * 60 + current_minute;
