@@ -22,6 +22,9 @@ html, body {
 .badge-orange{
     background-color: #F08602 ;
 }
+.badge-rainbow{
+    background : linear-gradient(124deg, #C5283D, #FA9F42, #44AF69, #068D9D, #A4036F);
+}
 .clock {
     font-size: 2em;
 }
