@@ -5,7 +5,7 @@ var markers = [];
 var cheap_beer = 100;
 
 var now = new Date();
-current_hour = now.getHours();
+current_hour = 11;
 current_minute = now.getMinutes();
 current_day = now.getDay();
 var current_time_minute = current_hour * 60 + current_minute;
@@ -131,10 +131,10 @@ function initMap() {
 
                 if (!isNaN(happy_minute)) {
                     var date = new Date(null);
-                    date.setSeconds((happy_minute - current_time_minute)); // specify value for SECONDS here
+                    date.setMinutes((happy_minute - current_time_minute)); // specify value for SECONDS here
                     var timer_happy = date.toISOString().substr(11, 8);
                 }
-                var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].current_price + '<br>' + 'Happy hour : ' + timer_happy + ' restantes' + '</p>';
+                var content_bar = "Fin de l'happy hour dans : " + timer_happy;
 
             }
             else {
@@ -150,15 +150,15 @@ function initMap() {
                 var happy_minute = hour_happy * 60 + minute_happy;
                 var date = new Date(null);
                 if (!isNaN(happy_minute)) {
-                    date.setSeconds((happy_minute - current_time_minute)); // specify value for SECONDS here
+                    date.setMinutes((happy_minute - current_time_minute)); // specify value for SECONDS here
                     var timer_happy = date.toISOString().substr(11, 8);
                 }
 
                 if (timer_happy === undefined) {
-                    var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].current_price + '<br>' + '</p>';
+                    var content_bar = "Ce bar ne propose pas d'happy hour ou nos informations sont incomplètes";
                 }
                 else {
-                    var content_bar = '<h1>' + data[i].bar_name + '</h1><p>' + data[i].address + '<br>' + 'Prix actuel : ' + data[i].current_price + '<br>' + 'Happy hour : ' + timer_happy + ' avant le début' + '</p>';
+                    var content_bar = "La prochaine happy hour commence dans : " + timer_happy;
 
                 }
 
@@ -171,7 +171,11 @@ function initMap() {
                 infowindow.setContent(content_bar);
 
                 //infowindow.open(map, marker);
-                $("#bar_info").html(data[i].bar_name);
+                $("#bar_info").html("");
+                $("#bar_name").html(data[i].bar_name);
+                $("#current_price").html("Le prix de la pinte de bière est actuellement de : " +  data[i].current_price + "€");
+                $("#happy_hour").html(content_bar);
+                $("#next_price").html("Le prochain prix sera de : " + next_price + "€");
             }
         })
         (marker, i));
