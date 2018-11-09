@@ -22,24 +22,31 @@ function CleanHour(hourStr, type) {
     }
 }
 
+function toggleBounce() {
+    var marker  = $(this)[0];
+    if (marker.getAnimation() !== null) {
+        marker.setAnimation(null);
+    } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+}
+
+function setMapOnAll(map) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }
+}
+
+function clearMarkers() {
+    setMapOnAll(null);
+}
+
+function deleteMarkers() {
+    clearMarkers();
+    markers = [];
+}
 
 function initMap() {
-
-    function setMapOnAll(map) {
-        for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(map);
-        }
-    }
-
-    function clearMarkers() {
-        setMapOnAll(null);
-    }
-
-    function deleteMarkers() {
-        clearMarkers();
-        markers = [];
-    }
-
 
     // console.log(data);
 
@@ -86,6 +93,7 @@ function initMap() {
     }
 
     for (i = 0; i < data.length; i++) {
+
         if (i === cheap_bar_index || data[i].current_price === cheap_beer) {
             beer_icon = "assets/img/Rainbowbeer.png";
         }
@@ -103,13 +111,17 @@ function initMap() {
         marker = new google.maps.Marker({
             position: new google.maps.LatLng(data[i].lat, data[i].long),
             map: map,
+            animation: google.maps.Animation.DROP,
             icon: new google.maps.MarkerImage(beer_icon)
         });
+        marker.addListener('click', toggleBounce);
+
 
         markers.push(marker);
-    //
+        //
 
         google.maps.event.addListener(marker, 'click', (function (marker, i) {
+
 
             var happy_hour_clean = CleanHour(data[i].lundi_happy, "happy");
             var hour_happy_start = parseInt(happy_hour_clean[0] + happy_hour_clean[1] + happy_hour_clean[2] + happy_hour_clean[3]);
@@ -180,16 +192,25 @@ function initMap() {
                 $("#goto_maps").attr('href', 'https://maps.google.com/?q=' + data[i].bar_name);
 
 
+
                 if (data[i].is_happy) {
                     $("#next_price").html("Le prochain prix sera de : " + data[i].price_regular + "€");
                 }
                 else {
-                    $("#next_price").html("Le prochain prix sera de : " + data[i].price_happy_hour + "€");
+                    if (data[i].price_happy_hour === ''){
+                        $("#next_price").html("");
+                    }
+                    else {
+                        $("#next_price").html("Le prochain prix sera de : " + data[i].price_happy_hour + "€");
+                    }
                 }
             }
         })
+
         (marker, i));
+
     }
+
 
 }
 
@@ -232,10 +253,15 @@ $(function () {
             var cpt_nb_bar = 0;
             data = d;
             data.forEach(function (d) {
-
                 ti = parse_timeinterval(d[days2label[current_day]]);
                 ti_hh = parse_timeinterval(d[days2label[current_day] + "_happy"]);
 
+
+                if (ti[1] < 420){
+                    if (current_time_minute <= ti[1]){
+                        d.is_open = true
+                    }
+                }
                 if (current_time_minute >= ti[0] && current_time_minute <= ti[1]) {
                     d.is_open = true;
                 } else {
@@ -271,17 +297,22 @@ $(function () {
             var value_range_slider = 0;
             output.innerHTML = slider.value;
 
-            slider.oninput = function() {
-                output.innerHTML = this.value+"h";
+            slider.oninput = function () {
+                output.innerHTML = this.value + "h";
                 value_range_slider = this.value;
             };
 
-            $( "#myRange" ).change(function() {
+            $("#myRange").change(function () {
 
                 cheap_beer = 100;
                 markers = [];
-                current_hour = value_range_slider;
-                console.log(current_hour)
+                if(parseInt(value_range_slider) < 7){
+                    current_hour = parseInt(value_range_slider)+24;
+                }
+                else {
+                    current_hour = parseInt(value_range_slider);
+
+                }
                 current_minute = 30;
                 cpt_nb_bar = 0;
                 current_time_minute = current_hour * 60 + current_minute;
@@ -291,6 +322,9 @@ $(function () {
 
                     ti = parse_timeinterval(d[days2label[current_day]]);
                     ti_hh = parse_timeinterval(d[days2label[current_day] + "_happy"]);
+
+
+
 
                     if (current_time_minute >= ti[0] && current_time_minute <= ti[1]) {
                         d.is_open = true;
