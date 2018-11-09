@@ -257,11 +257,7 @@ $(function () {
                 ti_hh = parse_timeinterval(d[days2label[current_day] + "_happy"]);
 
 
-                if (ti[1] < 420){
-                    if (current_time_minute <= ti[1]){
-                        d.is_open = true
-                    }
-                }
+
                 if (current_time_minute >= ti[0] && current_time_minute <= ti[1]) {
                     d.is_open = true;
                 } else {
