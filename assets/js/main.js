@@ -134,7 +134,7 @@ function initMap() {
                     date.setMinutes((happy_minute - current_time_minute)); // specify value for SECONDS here
                     var timer_happy = date.toISOString().substr(11, 8);
                 }
-                var content_bar = "Fin de l'happy hour dans : " + timer_happy;
+                var content_bar = "Fin de l'happy hour dans : " + timer_happy[1]+"h"+timer_happy[3]+timer_happy[4]+"m";
 
             }
             else {
@@ -158,7 +158,7 @@ function initMap() {
                     var content_bar = "Ce bar ne propose pas d'happy hour ou nos informations sont incomplètes";
                 }
                 else {
-                    var content_bar = "La prochaine happy hour commence dans : " + timer_happy;
+                    var content_bar = "La prochaine happy hour commence dans : " + timer_happy[1]+"h"+timer_happy[3]+timer_happy[4]+"m";
 
                 }
 
@@ -175,6 +175,7 @@ function initMap() {
                 $("#bar_name").html(data[i].bar_name);
                 $("#current_price").html("Le prix de la pinte de bière est actuellement de : " +  data[i].current_price + "€");
                 $("#happy_hour").html(content_bar);
+
 
                 if (data[i].is_happy){
                     $("#next_price").html("Le prochain prix sera de : " + data[i].price_regular + "€");
