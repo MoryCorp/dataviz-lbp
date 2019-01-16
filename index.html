@@ -52,6 +52,9 @@
             <span
                     data-toggle="tooltip" data-placement="top" title="Bière la moins chère" class="badge badge-rainbow">&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </h2>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Comment ça marche ?
+        </button>
     </div>
 </div>
 
@@ -59,14 +62,35 @@
     <div class="div-legend offset-md-1 col-md-2">
 
     </div>
-
-
-
     <div class="col-md-12">
-
     </div>
 
 </div>
+
+
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Comment ça marche ?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Hey salut et bienvenue dans notre super dataviz ! Avec cette carte tu vas pouvoir suivre en temps réel le prix de la pinte de blonde à Lyon.</p>
+                <p>Il te suffit de choisir un bar et hop les informations de celui-ci apparaissent aussitôt.</p>
+                <p>Tu as aussi la possibilité de choisir une heure précise grace à notre curseur magique !</p>
+                <p>La bière la moins cher est celle de couleur arc en ciel ! Ouvres bien les yeux ;) </p>
+                <sub>sources : <a href="https://www.petitpaume.com/" target="_blank">Le petit paumé</a> et <a href="https://lebonpelo.fr/">l'équipe du bon pelo !</a></sub>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -78,6 +102,12 @@
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAETAmIjibIuRIGX2bThxfd7Ht9etd6SOo"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
 <script src="assets/js/clock.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#exampleModal').modal('show');
+
+    });
+</script>
 
 </body>
 
