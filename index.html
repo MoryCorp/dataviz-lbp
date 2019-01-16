@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Find a beer</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
@@ -16,41 +16,54 @@
 </head>
 
 <body>
-<H1>Find a beer</H1>
-<h3>Trouver la pinte de bière la moins chère en fonction de l'heure</h3>
+<div class="container-fluid">
+    <H1>Find a beer <i class="fas fa-beer beer-color"></i></H1>
+    <h3>Trouver la pinte de bière la moins chère de Lyon en fonction de l'heure</h3>
+</div>
+
 <!-- <button id="target">Reset Markers</button> -->
 <div class="row no-gutters">
     <div id="map"></div>
-</div>
 
-<div class="row">
-    <div class="div-legend offset-md-1 col-md-2">
+    <div  class="col-md-6">
+        <div class="col-md-6">
+            <sub>Utiliser le curseur pour choisir une heure</sub>
+            <input type="range" min="1" max="23" value="50" step="1" class="slider" id="myRange">
+            <p class="ok">Heure choisis : <strong><span id="demo"></span></strong> | Heure actuelle : <strong><span class="clock"></span></strong></p>
+
+        </div>
+
+        <div class="card">
+            <div class="card-body card-custom">
+                <p id="bar_info">Cliquer sur un bar pour afficher ses informations</p>
+                <h2 id="bar_name"></h2>
+                <hr />
+                <h6 id="current_price"></h6>
+                <h6 id="happy_hour"></h6>
+                <h6 id="next_price"></h6>
+                <a id="goto_maps" href="" target="_blank"></a>
+            </div>
+        </div>
+        <br>
+        Legende :
         <h2><span data-toggle="tooltip" data-placement="top" title="Inférieur à la moyenne" class="badge badge-yellow">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;<span
                 data-toggle="tooltip" data-placement="top" title="Dans la moyenne" class="badge badge-orange">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;<span
                 data-toggle="tooltip" data-placement="top" title="Supérieur à la moyenne" class="badge badge-red">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span
-                data-toggle="tooltip" data-placement="top" title="Bière la moins chère" class="badge badge-rainbow">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span
+                    data-toggle="tooltip" data-placement="top" title="Bière la moins chère" class="badge badge-rainbow">&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </h2>
     </div>
+</div>
 
-    <div  class="offset-md-2 col-md-2">
-        <input type="range" min="1" max="23" value="50" step="1" class="slider" id="myRange">
-        <p>Heure : <span id="demo"></span></p>
+<div class="row no-gutters">
+    <div class="div-legend offset-md-1 col-md-2">
+
     </div>
-    <div class="offset-md-1 col-md-3 clock"></div>
+
+
 
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-body card-custom">
-              <p id="bar_info">Cliquer sur un bar pour afficher ses informations</p>
-              <h2 id="bar_name"></h2>
-              <hr />
-              <h5 id="current_price"></h5>
-              <h5 id="happy_hour"></h5>
-              <h5 id="next_price"></h5>
-              <a id="goto_maps" href="" target="_blank"></a>
-            </div>
-        </div>
+
     </div>
 
 </div>

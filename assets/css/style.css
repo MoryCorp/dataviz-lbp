@@ -1,16 +1,15 @@
 #map {
-    height: 600px;
-    width: 100%;
+    height: 500px;
+    width: 50%;
 }
 #goto_maps {
     float: right;
+    color: #068D9D;
 }
 
 /* Optional: Makes the sample page fill the window. */
 html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+    background-color: #F7F7F7;
 }
 .badge-red{
     background-color: #E94C4D ;
@@ -26,10 +25,10 @@ html, body {
     background : linear-gradient(124deg, #C5283D, #FA9F42, #44AF69, #068D9D, #A4036F);
 }
 .clock {
-    font-size: 2em;
+    font-size: 1em;
 }
 .card-custom{
-    background-color: #effdff;
+    background-color: #ffffff57;
 }
 .div-legend{
 }
@@ -73,4 +72,7 @@ html, body {
     border-radius: 50%;
     background: #4CAF50;
     cursor: pointer;
+}
+.beer-color{
+    color: #ffd987;
 }
