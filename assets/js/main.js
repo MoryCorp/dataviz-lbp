@@ -206,7 +206,6 @@ function initMap() {
                     if (current_hour >= hour_happy_end_clear) {
 
                         // console.log('La prochaine happy hour est demain à : '+ hour_happy_start.toString()[0]+hour_happy_start.toString()[1]+'h'+hour_happy_start.toString()[2]+hour_happy_start.toString()[3])
-                        console.log(when)
                         var content_bar = 'La prochaine happy hour est' + when + 'à : ' + hour_happy_start.toString()[0] + hour_happy_start.toString()[1] + 'h' + hour_happy_start.toString()[2] + hour_happy_start.toString()[3]
                     }
                     else {
