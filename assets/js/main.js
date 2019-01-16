@@ -142,15 +142,8 @@ function initMap() {
         markers.push(marker);
         //
 
-        if (slider_used){
-            if (previous_marker){
-                if (previous_marker.barName === marker.barName){
-                    console.log(marker);
-                    marker.setAnimation(google.maps.Animation.BOUNCE);
-                }
-            }
 
-        }
+
 
         google.maps.event.addListener(marker, 'click', (function (marker, i) {
 
@@ -260,6 +253,17 @@ function initMap() {
         })
 
         (marker, i));
+
+        if (slider_used){
+            if (previous_marker){
+                if (previous_marker.barName === marker.barName){
+                    //     console.log(marker);
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                    new google.maps.event.trigger( marker, 'click' );
+                }
+            }
+
+        }
 
     }
 
