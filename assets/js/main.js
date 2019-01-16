@@ -5,7 +5,7 @@ var average_price = 0;
 var markers = [];
 var cheap_beer = 100;
 var slider_used = false;
-var when = "";
+var when = " demain ";
 var currant_bar_long = 4.8262804;
 var currant_bar_lat = 45.7623323;
 var previous_marker;
@@ -206,6 +206,7 @@ function initMap() {
                     if (current_hour >= hour_happy_end_clear) {
 
                         // console.log('La prochaine happy hour est demain à : '+ hour_happy_start.toString()[0]+hour_happy_start.toString()[1]+'h'+hour_happy_start.toString()[2]+hour_happy_start.toString()[3])
+                        console.log(when)
                         var content_bar = 'La prochaine happy hour est' + when + 'à : ' + hour_happy_start.toString()[0] + hour_happy_start.toString()[1] + 'h' + hour_happy_start.toString()[2] + hour_happy_start.toString()[3]
                     }
                     else {
