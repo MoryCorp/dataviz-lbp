@@ -42,6 +42,7 @@ function setMapOnAll(map) {
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(map);
     }
+
 }
 
 function clearMarkers() {
@@ -335,8 +336,8 @@ $(function () {
             var cpt_nb_bar = 0;
             data = d;
             data.forEach(function (d) {
-                ti = parse_timeinterval(d[days2label[current_day]]);
-                ti_hh = parse_timeinterval(d[days2label[current_day] + "_happy"]);
+                ti = parse_timeinterval(d[days2label[3]]);
+                ti_hh = parse_timeinterval(d[days2label[3] + "_happy"]);
 
 
                 if (current_time_minute >= ti[0] && current_time_minute <= ti[1]) {
